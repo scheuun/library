@@ -12,10 +12,120 @@
 <!DOCTYPE html>
 <html>
 <head>
- <meta charset="utf-8">
-<title>JOIN</title>
-<script>
-</script>
+    <meta charset="utf-8">
+    <title>JOIN</title>
+    <script>
+        function join (){
+
+            // $('#id').blur(function () {
+            //     console.log($('#id').val())
+            //     $.ajax({
+            //         type:"POST",
+            //         url:"/idCheck",
+            //         data:{
+            //             id: $('#id').val()
+            //         },
+            //         success:function(cnt){
+            //             if(document.getElementById('id').value== "") {
+            //                 $('.idMsg').css("display","block");
+            //             }else {
+            //                 if(cnt==0){
+            //                     $('.idMsg').text("사용 가능한 아이디 입니다.");
+            //                     $('.idMsg').css("display","block");
+            //                 }else{
+            //                     $('.idMsg').text("이미 사용중인 아이디 입니다.");
+            //                     $('.idMsg').css("display","block");
+            //                 }
+            //             }
+            //         },
+            //         error: function (data) {
+            //             result:data
+            //             alert("회원가입 에러");
+            //
+            //         },
+            //     });
+            // });
+            //
+            // $('#pwd').blur(function (){
+            //     var pwd = document.getElementById('pwd').value;
+            //
+            //     if(pwd== "" || pwd.length == 0) {
+            //         $('.pwdMsg').css("display", "block");
+            //     } else {
+            //         if(pwd.length < 6 || pwd.length > 12) {
+            //             $('.pwdMsg').text("비밀번호는 6글자 이상, 12글자 이하만 이용 가능합니다.");
+            //             $('.pwdMsg').css("display", "block");
+            //         } else {
+            //             $('.pwdMsg').css("display", "none");
+            //         }
+            //     }
+            // });
+            //
+            // $('#pwdChk').blur(function (){
+            //     var pwd = document.getElementById('pwd').value;
+            //     var pwdChk = document.getElementById('pwdChk').value;
+            //
+            //
+            //     if(pwdChk== "") {
+            //         $('.pwdChkMsg').css("display", "block");
+            //     } else {
+            //         if( pwd != pwdChk ) {
+            //             $('.pwdChkMsg').text("비밀번호가 일치하지 않습니다.");
+            //             $('.pwdChkMsg').css("display", "block");
+            //         } else{
+            //             $('.pwdChkMsg').text("비밀번호가 일치합니다.");
+            //             $('.pwdChkMsg').css("display", "block");
+            //         }
+            //     }
+            //
+            // });
+            //
+            // $('#email').blur(function (){
+            //     if(document.getElementById('email').value== "") {
+            //         $('.emailMsg').css("display", "block");
+            //
+            //     }
+            // });
+
+            $('#joinBtn').click(function (){
+
+
+
+                var id = $('#id').val();
+                var pwd = $('#pwd').val();
+                var email = $('#email').val();
+
+
+                if(id.length == 0 || pwd.length == 0 || email.length == 0) {
+                    $('.idMsg').css("display","block");
+                    $('.pwdMsg').css("display", "block");
+                    $('.pwdChkMsg').css("display", "block");
+                    $('.emailMsg').css("display", "block");
+                } else {
+                    $.ajax({
+                        type:"POST",
+                        url: "/join",
+                        dataType:"json",
+                        data: {id: id,
+                            pwd: pwd,
+                            email: email},
+                        success : function (data) {
+                            result:data,
+                                document.getElementById("view1").style.display = "none";
+                            document.getElementById("view2").style.display = "block";
+                        },
+                        error: function (data) {
+                            result:data
+                            alert("회원가입 실패");
+
+                        },
+                    });
+                }
+            });
+
+        };
+        $(join)
+    </script>
 </head>
 <body>
 <br><br>
@@ -35,8 +145,8 @@
         <input type='text' id='email' name='email'/>
         <span class="emailMsg" style ="color:red;display:none;">필수 정보입니다.</span><br><br><br>
         <div  style="display: flex; justify-content: center;">
-              <button type='button' class='btn btn-secondary btn-block'
-                        id='joinBtn' style="width:120">회원가입</button>
+            <button type='button' class='btn btn-secondary btn-block'
+                    id='joinBtn' style="width:120">회원가입</button>
         </div>
     </div>
     <div class='col' id='view2'  style ="display:none;text-align:center" >
