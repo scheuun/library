@@ -17,75 +17,75 @@
     <script>
         function join (){
 
-            // $('#id').blur(function () {
-            //     console.log($('#id').val())
-            //     $.ajax({
-            //         type:"POST",
-            //         url:"/idCheck",
-            //         data:{
-            //             id: $('#id').val()
-            //         },
-            //         success:function(cnt){
-            //             if(document.getElementById('id').value== "") {
-            //                 $('.idMsg').css("display","block");
-            //             }else {
-            //                 if(cnt==0){
-            //                     $('.idMsg').text("사용 가능한 아이디 입니다.");
-            //                     $('.idMsg').css("display","block");
-            //                 }else{
-            //                     $('.idMsg').text("이미 사용중인 아이디 입니다.");
-            //                     $('.idMsg').css("display","block");
-            //                 }
-            //             }
-            //         },
-            //         error: function (data) {
-            //             result:data
-            //             alert("회원가입 에러");
-            //
-            //         },
-            //     });
-            // });
-            //
-            // $('#pwd').blur(function (){
-            //     var pwd = document.getElementById('pwd').value;
-            //
-            //     if(pwd== "" || pwd.length == 0) {
-            //         $('.pwdMsg').css("display", "block");
-            //     } else {
-            //         if(pwd.length < 6 || pwd.length > 12) {
-            //             $('.pwdMsg').text("비밀번호는 6글자 이상, 12글자 이하만 이용 가능합니다.");
-            //             $('.pwdMsg').css("display", "block");
-            //         } else {
-            //             $('.pwdMsg').css("display", "none");
-            //         }
-            //     }
-            // });
-            //
-            // $('#pwdChk').blur(function (){
-            //     var pwd = document.getElementById('pwd').value;
-            //     var pwdChk = document.getElementById('pwdChk').value;
-            //
-            //
-            //     if(pwdChk== "") {
-            //         $('.pwdChkMsg').css("display", "block");
-            //     } else {
-            //         if( pwd != pwdChk ) {
-            //             $('.pwdChkMsg').text("비밀번호가 일치하지 않습니다.");
-            //             $('.pwdChkMsg').css("display", "block");
-            //         } else{
-            //             $('.pwdChkMsg').text("비밀번호가 일치합니다.");
-            //             $('.pwdChkMsg').css("display", "block");
-            //         }
-            //     }
-            //
-            // });
-            //
-            // $('#email').blur(function (){
-            //     if(document.getElementById('email').value== "") {
-            //         $('.emailMsg').css("display", "block");
-            //
-            //     }
-            // });
+            $('#id').blur(function () {
+                console.log($('#id').val())
+                $.ajax({
+                    type:"POST",
+                    url:"/idCheck",
+                    data:{
+                        id: $('#id').val()
+                    },
+                    success:function(cnt){
+                        if(document.getElementById('id').value== "") {
+                            $('.idMsg').css("display","block");
+                        }else {
+                            if(cnt==0){
+                                $('.idMsg').text("사용 가능한 아이디 입니다.");
+                                $('.idMsg').css("display","block");
+                            }else{
+                                $('.idMsg').text("이미 사용중인 아이디 입니다.");
+                                $('.idMsg').css("display","block");
+                            }
+                        }
+                    },
+                    error: function (data) {
+                        result:data
+                        alert("회원가입 에러");
+
+                    },
+                });
+            });
+
+            $('#pwd').blur(function (){
+                var pwd = document.getElementById('pwd').value;
+
+                if(pwd== "" || pwd.length == 0) {
+                    $('.pwdMsg').css("display", "block");
+                } else {
+                    if(pwd.length < 6 || pwd.length > 12) {
+                        $('.pwdMsg').text("비밀번호는 6글자 이상, 12글자 이하만 이용 가능합니다.");
+                        $('.pwdMsg').css("display", "block");
+                    } else {
+                        $('.pwdMsg').css("display", "none");
+                    }
+                }
+            });
+
+            $('#pwdChk').blur(function (){
+                var pwd = document.getElementById('pwd').value;
+                var pwdChk = document.getElementById('pwdChk').value;
+
+
+                if(pwdChk== "") {
+                    $('.pwdChkMsg').css("display", "block");
+                } else {
+                    if( pwd != pwdChk ) {
+                        $('.pwdChkMsg').text("비밀번호가 일치하지 않습니다.");
+                        $('.pwdChkMsg').css("display", "block");
+                    } else{
+                        $('.pwdChkMsg').text("비밀번호가 일치합니다.");
+                        $('.pwdChkMsg').css("display", "block");
+                    }
+                }
+
+            });
+
+            $('#email').blur(function (){
+                if(document.getElementById('email').value== "") {
+                    $('.emailMsg').css("display", "block");
+
+                }
+            });
 
             $('#joinBtn').click(function (){
 
