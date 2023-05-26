@@ -6,6 +6,8 @@ import com.my.library.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MemberServiceImpl implements MemberService{
     @Autowired
@@ -41,5 +43,10 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public void updatePwd(Member member) {
         memberMap.updatePwd(member);
+    }
+
+    @Override
+    public Member myPage(String id) {
+        return memberMap.myPage(id);
     }
 }

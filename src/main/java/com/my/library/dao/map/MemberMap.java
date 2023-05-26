@@ -3,6 +3,8 @@ package com.my.library.dao.map;
 import com.my.library.model.Member;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface MemberMap {
     int joinMember(Member member);
     int idCheck(String id);
@@ -10,4 +12,5 @@ public interface MemberMap {
     String findId(String email);
     int findPwd(@Param("id") String id, @Param("email") String email);
     void updatePwd(Member member);
+    Member myPage(String id);
 }

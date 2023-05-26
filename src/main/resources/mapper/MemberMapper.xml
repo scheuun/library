@@ -36,4 +36,8 @@
         where id = #{id} and email = #{email}
     </select>
 
+    <select id="myPage" resultType="Member">
+        select * from members
+        where id = #{id}
+    </select>
 </mapper>

@@ -1,12 +1,6 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<%--
-  Created by IntelliJ IDEA.
-  User: sche1
-  Date: 2022-11-10
-  Time: 오후 3:31
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -82,13 +76,56 @@
             text-align: center;
         }
     </style>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: 'https://openapi.gg.go.kr/Poplitloanbook?KEY=eb69202112ec4d8399e7b233465154e8&Type=json&pIndex=1&pSize=1000',
+                type: 'GET',
+                success: function (data) {
+                    const jsonData = JSON.parse(data);
+
+                    const book1 = jsonData.Poplitloanbook[1].row[0].BOOK_IMAGE_URL;
+                    const book2 = jsonData.Poplitloanbook[1].row[1].BOOK_IMAGE_URL;
+                    const book3 = jsonData.Poplitloanbook[1].row[2].BOOK_IMAGE_URL;
+                    const book4 = jsonData.Poplitloanbook[1].row[3].BOOK_IMAGE_URL;
+                    const book5 = jsonData.Poplitloanbook[1].row[4].BOOK_IMAGE_URL;
+
+                    const imageElement1 = document.getElementById("image1");
+                    imageElement1.src = book1;
+
+                    const imageElement2 = document.getElementById("image2");
+                    imageElement2.src = book2;
+
+                    const imageElement3 = document.getElementById("image3");
+                    imageElement3.src = book3;
+
+                    const imageElement4 = document.getElementById("image4");
+                    imageElement4.src = book4;
+
+                    const imageElement5 = document.getElementById("image5");
+                    imageElement5.src = book5;
+                },
+                error: function (data) {
+                    console.log(data);
+                    alert("실패");
+                }
+            });
+        });
+
+
+    </script>
 </head>
 <body>
 <header>
     <h1>도서관</h1>
 </header>
 <div style="text-align: right">
-    <a style='color:black' href = '<%=request.getContextPath() %>/member/login'>로그인</a> |
+    <c:if test="${empty sessionScope.id}">
+        <a style='color:black' href = '<%=request.getContextPath() %>/member/login'>로그인</a> |
+    </c:if>
+    <c:if test="${not empty sessionScope.id}">
+        <a style='color:black' href = '<%=request.getContextPath() %>/member/logout'>로그아웃</a> |
+    </c:if>
     <a style='color:black' href = '<%=request.getContextPath() %>/member/join'>회원가입</a>
 </div>
 <section>
@@ -102,13 +139,33 @@
 <section>
     <h2>이달의 추천 도서</h2>
     <div class="book">
+        <img id="image1">
     </div>
     <div class="book">
+        <img id="image2">
+    </div>
+    <div class="book">
+        <img id="image3">
+    </div>
+    <div class="book">
+        <img id="image4">
+    </div>
+    <div class="book">
+        <img id="image5">
     </div>
 </section>
 
 <section>
-    <h2>대출 현황</h2><h2>대출 이력</h2><h2>마이페이지</h2>
+    <c:if test="${empty sessionScope.id}">
+        <a style='color:black' href = '<%=request.getContextPath() %>/member/login'><h2>대출 현황</h2></a>
+        <a style='color:black' href = '<%=request.getContextPath() %>/member/login'><h2>대출 이력</h2></a>
+        <a style='color:black' href = '<%=request.getContextPath() %>/member/login'><h2>마이페이지</h2></a>
+    </c:if>
+    <c:if test="${not empty sessionScope.id}">
+        <a style='color:black' href = '<%=request.getContextPath() %>/library/login'><h2>대출 현황</h2></a>
+        <a style='color:black' href = '<%=request.getContextPath() %>/library/login'><h2>대출 이력</h2></a>
+        <a style='color:black' href = '<%=request.getContextPath() %>/member/myPage'><h2>마이페이지</h2></a>
+    </c:if>
 </section>
 
 <footer>
