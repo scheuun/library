@@ -12,4 +12,9 @@ public class LibraryController {
         session.getAttribute("id");
         return "library/main";
     }
+
+    @GetMapping("/library/bookDetail")
+    public String BookDetail() {
+        return "library/bookDetail";
+    }
 }

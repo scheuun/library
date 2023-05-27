@@ -84,26 +84,21 @@
                 success: function (data) {
                     const jsonData = JSON.parse(data);
 
-                    const book1 = jsonData.Poplitloanbook[1].row[0].BOOK_IMAGE_URL;
-                    const book2 = jsonData.Poplitloanbook[1].row[1].BOOK_IMAGE_URL;
-                    const book3 = jsonData.Poplitloanbook[1].row[2].BOOK_IMAGE_URL;
-                    const book4 = jsonData.Poplitloanbook[1].row[3].BOOK_IMAGE_URL;
-                    const book5 = jsonData.Poplitloanbook[1].row[4].BOOK_IMAGE_URL;
-
                     const imageElement1 = document.getElementById("image1");
-                    imageElement1.src = book1;
+                    imageElement1.src = jsonData.Poplitloanbook[1].row[0].BOOK_IMAGE_URL;
 
                     const imageElement2 = document.getElementById("image2");
-                    imageElement2.src = book2;
+                    imageElement2.src = jsonData.Poplitloanbook[1].row[1].BOOK_IMAGE_URL;
 
                     const imageElement3 = document.getElementById("image3");
-                    imageElement3.src = book3;
+                    imageElement3.src = jsonData.Poplitloanbook[1].row[2].BOOK_IMAGE_URL;
 
                     const imageElement4 = document.getElementById("image4");
-                    imageElement4.src = book4;
+                    imageElement4.src = jsonData.Poplitloanbook[1].row[3].BOOK_IMAGE_URL;
 
                     const imageElement5 = document.getElementById("image5");
-                    imageElement5.src = book5;
+                    imageElement5.src = jsonData.Poplitloanbook[1].row[4].BOOK_IMAGE_URL;
+
                 },
                 error: function (data) {
                     console.log(data);
@@ -112,7 +107,9 @@
             });
         });
 
-
+        function openImg() {
+            window.location.href = "<%=request.getContextPath() %>/library/bookDetail";
+        }
     </script>
 </head>
 <body>
@@ -139,7 +136,7 @@
 <section>
     <h2>이달의 추천 도서</h2>
     <div class="book">
-        <img id="image1">
+        <img id="image1" onclick="openImg()">
     </div>
     <div class="book">
         <img id="image2">
