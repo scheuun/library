@@ -83,33 +83,23 @@
                 type: 'GET',
                 success: function (data) {
                     const jsonData = JSON.parse(data);
+                    const arr = [];
 
-                    const imageElement1 = document.getElementById("image1");
-                    imageElement1.src = jsonData.Poplitloanbook[1].row[0].BOOK_IMAGE_URL;
+                    for (let i = 0; i < 5; i++) {
+                        const  imageNum = document.getElementById("image" + (i + 1));
+                        imageNum.src = jsonData.Poplitloanbook[1].row[i].BOOK_IMAGE_URL;
 
-                    const imageElement2 = document.getElementById("image2");
-                    imageElement2.src = jsonData.Poplitloanbook[1].row[1].BOOK_IMAGE_URL;
-
-                    const imageElement3 = document.getElementById("image3");
-                    imageElement3.src = jsonData.Poplitloanbook[1].row[2].BOOK_IMAGE_URL;
-
-                    const imageElement4 = document.getElementById("image4");
-                    imageElement4.src = jsonData.Poplitloanbook[1].row[3].BOOK_IMAGE_URL;
-
-                    const imageElement5 = document.getElementById("image5");
-                    imageElement5.src = jsonData.Poplitloanbook[1].row[4].BOOK_IMAGE_URL;
-
+                        imageNum.addEventListener("click", function() {;
+                            window.location.href = "<%=request.getContextPath() %>/library/bookDetail" + JSON.stringify(jsonData.Poplitloanbook[1].row[i].RKI_NO);
+                        })
+                    }
                 },
                 error: function (data) {
                     console.log(data);
                     alert("실패");
                 }
             });
-        });
-
-        function openImg() {
-            window.location.href = "<%=request.getContextPath() %>/library/bookDetail";
-        }
+        });;
     </script>
 </head>
 <body>
@@ -135,19 +125,19 @@
 
 <section>
     <h2>이달의 추천 도서</h2>
-    <div class="book">
-        <img id="image1" onclick="openImg()">
+    <div id="book1" class="book">
+        <img id="image1">
     </div>
-    <div class="book">
+    <div id="book2" class="book">
         <img id="image2">
     </div>
-    <div class="book">
+    <div id="book3" class="book">
         <img id="image3">
     </div>
-    <div class="book">
+    <div id="book4" class="book">
         <img id="image4">
     </div>
-    <div class="book">
+    <div id="book5" class="book">
         <img id="image5">
     </div>
 </section>
