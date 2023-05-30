@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>도서 상세 정보</title>
+    <title>BOOK DETAIL</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -57,13 +57,13 @@
 </head>
 <body>
 <div id="book-details">
-    <h1>도서 제목</h1>
+    <h1>${book_nm_info}</h1>
     <div class="book">
-        <img src="https://image.aladin.co.kr/product/26942/84/cover/k582730818_1.jpg" >
+        <img src=${book_image_url} >
     </div>
-    <p>저자: 작가 이름</p>
-    <p>출판사: 출판사 이름</p>
-    <p>출판 날짜: 출판 날짜</p>
+    <p>저자: ${author_nm_info}</p>
+    <p>출판사: ${publshcmpy_nm}</p>
+    <p>출판 날짜: ${publcatn_yy}</p>
     <p>책상태: (대출 가능 여부)</p>
 </div>
 </body>

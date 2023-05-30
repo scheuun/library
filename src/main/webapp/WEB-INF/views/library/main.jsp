@@ -83,14 +83,31 @@
                 type: 'GET',
                 success: function (data) {
                     const jsonData = JSON.parse(data);
-                    const arr = [];
 
                     for (let i = 0; i < 5; i++) {
                         const  imageNum = document.getElementById("image" + (i + 1));
                         imageNum.src = jsonData.Poplitloanbook[1].row[i].BOOK_IMAGE_URL;
 
                         imageNum.addEventListener("click", function() {;
-                            window.location.href = "<%=request.getContextPath() %>/library/bookDetail" + JSON.stringify(jsonData.Poplitloanbook[1].row[i].RKI_NO);
+                           // window.location.href = "<%=request.getContextPath() %>/library/bookDetail" + JSON.stringify(jsonData.Poplitloanbook[1].row[i].RKI_NO);
+                            var form = document.createElement("form");
+                            form.method = "POST";
+                            form.action = "<%=request.getContextPath() %>/library/bookDetail";
+
+                            var input = document.createElement("input");
+                            input.type = "hidden";
+                            input.name = "bookData";
+                            input.value = JSON.stringify({
+                                book_nm_info: jsonData.Poplitloanbook[1].row[i].BOOK_NM_INFO,
+                                author_nm_info: jsonData.Poplitloanbook[1].row[i].AUTHOR_NM_INFO,
+                                publshcmpy_nm: jsonData.Poplitloanbook[1].row[i].PUBLSHCMPY_NM,
+                                publcatn_yy: jsonData.Poplitloanbook[1].row[i].PUBLCATN_YY,
+                                book_image_url: jsonData.Poplitloanbook[1].row[i].BOOK_IMAGE_URL
+                            });
+
+                            form.appendChild(input);
+                            document.body.appendChild(form);
+                            form.submit();
                         })
                     }
                 },
