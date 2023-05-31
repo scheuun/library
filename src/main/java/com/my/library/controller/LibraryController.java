@@ -1,7 +1,10 @@
 package com.my.library.controller;
 
+import com.my.library.model.Library;
+import com.my.library.service.LibraryService;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +14,9 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class LibraryController {
+    @Autowired
+    LibraryService libraryService;
+
     @GetMapping("/")
     public String Main(HttpSession session) {
         session.getAttribute("id");
@@ -18,18 +24,32 @@ public class LibraryController {
     }
 
     @RequestMapping(value="/library/bookDetail" , method = {RequestMethod.GET, RequestMethod.POST})
-    public String BookDetail(HttpServletRequest httpServletRequest, Model model) throws JSONException {
-        System.out.println(httpServletRequest.getParameter("bookData"));
-
+    public String BookDetail(HttpServletRequest httpServletRequest, HttpSession session, Model model) throws JSONException {
         JSONObject json = new JSONObject(httpServletRequest.getParameter("bookData"));
-//        String rkiNo = json.getString("rki_no");
-//        System.out.println("RKI_NO: " + rkiNo);
 
+
+        session.getAttribute("id");
+
+        model.addAttribute("rki_no", json.getString("rki_no"));
         model.addAttribute("book_nm_info", json.getString("book_nm_info"));
         model.addAttribute("author_nm_info", json.getString("author_nm_info"));
         model.addAttribute("publshcmpy_nm", json.getString("publshcmpy_nm"));
         model.addAttribute("publcatn_yy", json.getString("publcatn_yy"));
         model.addAttribute("book_image_url", json.getString("book_image_url"));
         return "library/bookDetail";
+    }
+
+//    @PostMapping("/reserve")
+//    @ResponseBody
+//    public void reserve(int rki_no, String book_nm_info, String author_nm_info, String publshcmpy_nm, String publcatn_yy, String id, HttpSession session) {
+//        id = (String) session.getAttribute("id");
+//        libraryService.reserve(rki_no, book_nm_info, author_nm_info, publshcmpy_nm, publcatn_yy, id);
+//    }
+
+    @PostMapping("/reserve")
+    @ResponseBody
+    public void reserve(Library library, HttpSession session) {
+        library.setId((String) session.getAttribute("id"));
+        libraryService.reserve(library);
     }
 }

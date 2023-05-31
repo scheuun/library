@@ -3,8 +3,6 @@ package com.my.library.dao.map;
 import com.my.library.model.Member;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
 public interface MemberMap {
     int joinMember(Member member);
     int idCheck(String id);

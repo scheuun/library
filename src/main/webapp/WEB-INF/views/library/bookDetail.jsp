@@ -54,17 +54,72 @@
             color: #888;
         }
     </style>
+    <script>
+        $(document).ready(function () {
+            $('#reserveBtn').click(function (){
+
+                var rki_no = $('#rki_no').val();
+                var book_nm_info = $('#book_nm_info').val();
+                var author_nm_info = $('#author_nm_info').val();
+                var publshcmpy_nm = $('#publshcmpy_nm').val();
+                var publcatn_yy = $('#publcatn_yy').val();
+
+                $.ajax({
+                    type:"POST",
+                    url: "/reserve",
+                    dataType:"json",
+                    data: {
+                        rki_no: rki_no,
+                        book_nm_info: book_nm_info,
+                        author_nm_info: author_nm_info,
+                        publshcmpy_nm: publshcmpy_nm,
+                        publcatn_yy: publcatn_yy
+                    },
+                    success : function (data) {
+                        result:data,
+                            console.log("성공");
+                    },
+                    error: function (data) {
+                        result:data
+                        alert("실패");
+
+                    },
+                });
+            });
+        });
+    </script>
 </head>
 <body>
+<div style="text-align: right">
+    <c:if test="${empty sessionScope.id}">
+        <a style='color:black' href = '<%=request.getContextPath() %>/member/login'>로그인</a> |
+    </c:if>
+    <c:if test="${not empty sessionScope.id}">
+        <a style='color:black' href = '<%=request.getContextPath() %>/member/logout'>로그아웃</a> |
+    </c:if>
+    <a style='color:black' href = '<%=request.getContextPath() %>/member/join'>회원가입</a> |
+    <a style='color:black' href = '<%=request.getContextPath() %>/'>메인</a>
+</div>
 <div id="book-details">
-    <h1>${book_nm_info}</h1>
+    <h1>${rki_no}. ${book_nm_info}</h1>
+    <input type="hidden" id="rki_no" value="${rki_no}">
+    <input type="hidden" id="book_nm_info" value="${book_nm_info}">
     <div class="book">
         <img src=${book_image_url} >
     </div>
     <p>저자: ${author_nm_info}</p>
+    <input type="hidden" id="author_nm_info" value="${author_nm_info}">
     <p>출판사: ${publshcmpy_nm}</p>
+    <input type="hidden" id="publshcmpy_nm" value="${publshcmpy_nm}">
     <p>출판 날짜: ${publcatn_yy}</p>
+    <input type="hidden" id="publcatn_yy" value="${publcatn_yy}">
     <p>책상태: (대출 가능 여부)</p>
+    <c:if test="${empty sessionScope.id}">
+        <button id="reserveBtn" class="btn btn-primary" onclick="location.href='<%=request.getContextPath() %>/member/login'">예약</button>
+    </c:if>
+    <c:if test="${not empty sessionScope.id}">
+        <button id="reserveBtn" class="btn btn-primary">예약</button>
+    </c:if>
 </div>
 </body>
 </html>

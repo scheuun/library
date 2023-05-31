@@ -98,6 +98,7 @@
                             input.type = "hidden";
                             input.name = "bookData";
                             input.value = JSON.stringify({
+                                rki_no: jsonData.Poplitloanbook[1].row[i].RKI_NO,
                                 book_nm_info: jsonData.Poplitloanbook[1].row[i].BOOK_NM_INFO,
                                 author_nm_info: jsonData.Poplitloanbook[1].row[i].AUTHOR_NM_INFO,
                                 publshcmpy_nm: jsonData.Poplitloanbook[1].row[i].PUBLSHCMPY_NM,
@@ -130,7 +131,8 @@
     <c:if test="${not empty sessionScope.id}">
         <a style='color:black' href = '<%=request.getContextPath() %>/member/logout'>로그아웃</a> |
     </c:if>
-    <a style='color:black' href = '<%=request.getContextPath() %>/member/join'>회원가입</a>
+    <a style='color:black' href = '<%=request.getContextPath() %>/member/join'>회원가입</a> |
+    <a style='color:black' href = '<%=request.getContextPath() %>/'>메인</a>
 </div>
 <section>
     <h2>도서 검색</h2>

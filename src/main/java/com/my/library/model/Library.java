@@ -11,6 +11,7 @@ public class Library {
 	private String publcatn_yy;
 	private int volm_cnt;
 	private String book_image_url;
+	private String id;
 
     public LocalDate getStd_ym() {
         return std_ym;
@@ -74,5 +75,13 @@ public class Library {
 
     public void setBook_image_url(String book_image_url) {
         this.book_image_url = book_image_url;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
