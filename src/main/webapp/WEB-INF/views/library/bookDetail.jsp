@@ -58,33 +58,40 @@
         $(document).ready(function () {
             $('#reserveBtn').click(function (){
 
+                var id = '<%=(String)session.getAttribute("id")%>';
                 var rki_no = $('#rki_no').val();
                 var book_nm_info = $('#book_nm_info').val();
                 var author_nm_info = $('#author_nm_info').val();
                 var publshcmpy_nm = $('#publshcmpy_nm').val();
                 var publcatn_yy = $('#publcatn_yy').val();
 
-                $.ajax({
-                    type:"POST",
-                    url: "/reserve",
-                    dataType:"json",
-                    data: {
-                        rki_no: rki_no,
-                        book_nm_info: book_nm_info,
-                        author_nm_info: author_nm_info,
-                        publshcmpy_nm: publshcmpy_nm,
-                        publcatn_yy: publcatn_yy
-                    },
-                    success : function (data) {
-                        result:data,
-                            console.log("성공");
-                    },
-                    error: function (data) {
-                        result:data
-                        alert("실패");
+                console.log(id)
+                if (id !== null) {
+                    $.ajax({
+                        type:"POST",
+                        url: "/reserve",
+                        dataType:"json",
+                        data: {
+                            rki_no: rki_no,
+                            book_nm_info: book_nm_info,
+                            author_nm_info: author_nm_info,
+                            publshcmpy_nm: publshcmpy_nm,
+                            publcatn_yy: publcatn_yy,
+                            id: id
+                        },
+                        success : function (data) {
+                            result:data,
+                                console.log("성공");
+                        },
+                        error: function (data) {
+                            result:data
+                            alert("실패");
 
-                    },
-                });
+                        },
+                    });
+                } else if (id == null) {
+                    location.href = "<%=request.getContextPath() %>/member/login";
+                }
             });
         });
     </script>
@@ -114,12 +121,7 @@
     <p>출판 날짜: ${publcatn_yy}</p>
     <input type="hidden" id="publcatn_yy" value="${publcatn_yy}">
     <p>책상태: (대출 가능 여부)</p>
-    <c:if test="${empty sessionScope.id}">
-        <button id="reserveBtn" class="btn btn-primary" onclick="location.href='<%=request.getContextPath() %>/member/login'">예약</button>
-    </c:if>
-    <c:if test="${not empty sessionScope.id}">
-        <button id="reserveBtn" class="btn btn-primary">예약</button>
-    </c:if>
+    <button id="reserveBtn" class="btn btn-primary">예약</button>
 </div>
 </body>
 </html>
