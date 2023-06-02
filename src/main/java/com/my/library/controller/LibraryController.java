@@ -39,13 +39,6 @@ public class LibraryController {
         return "library/bookDetail";
     }
 
-//    @PostMapping("/reserve")
-//    @ResponseBody
-//    public void reserve(int rki_no, String book_nm_info, String author_nm_info, String publshcmpy_nm, String publcatn_yy, String id, HttpSession session) {
-//        id = (String) session.getAttribute("id");
-//        libraryService.reserve(rki_no, book_nm_info, author_nm_info, publshcmpy_nm, publcatn_yy, id);
-//    }
-
     @PostMapping("/reserve")
     @ResponseBody
     public void reserve(Library library, HttpSession session) {

@@ -57,20 +57,20 @@
     <script>
         $(document).ready(function () {
             $('#reserveBtn').click(function (){
-
-                var id = '<%=(String)session.getAttribute("id")%>';
+                var id = '<%= (String)session.getAttribute("id") %>';
                 var rki_no = $('#rki_no').val();
                 var book_nm_info = $('#book_nm_info').val();
                 var author_nm_info = $('#author_nm_info').val();
                 var publshcmpy_nm = $('#publshcmpy_nm').val();
                 var publcatn_yy = $('#publcatn_yy').val();
 
-                console.log(id)
-                if (id !== null) {
+                console.log(id);
+
+                if (id !== null && id.length !== 0) {
                     $.ajax({
-                        type:"POST",
+                        type: "POST",
                         url: "/reserve",
-                        dataType:"json",
+                        dataType: "json",
                         data: {
                             rki_no: rki_no,
                             book_nm_info: book_nm_info,
@@ -79,18 +79,17 @@
                             publcatn_yy: publcatn_yy,
                             id: id
                         },
-                        success : function (data) {
-                            result:data,
-                                console.log("성공");
+                        success: function (data) {
+                            result: data;
+                            console.log("성공");
                         },
                         error: function (data) {
-                            result:data
+                            result: data;
                             alert("실패");
-
-                        },
+                        }
                     });
-                } else if (id == null) {
-                    location.href = "<%=request.getContextPath() %>/member/login";
+                } else {
+                    location.href = "<%= request.getContextPath() %>/member/login";
                 }
             });
         });
