@@ -30,19 +30,19 @@ public class LibraryController {
 
         session.getAttribute("id");
 
-        model.addAttribute("rki_no", json.getString("rki_no"));
+        model.addAttribute("rki_no", json.getInt("rki_no"));
         model.addAttribute("book_nm_info", json.getString("book_nm_info"));
         model.addAttribute("author_nm_info", json.getString("author_nm_info"));
         model.addAttribute("publshcmpy_nm", json.getString("publshcmpy_nm"));
         model.addAttribute("publcatn_yy", json.getString("publcatn_yy"));
         model.addAttribute("book_image_url", json.getString("book_image_url"));
+        model.addAttribute("state", libraryService.checkRes(json.getInt("rki_no")) == 0 ? "O" : "X");
         return "library/bookDetail";
     }
 
     @PostMapping("/reserve")
     @ResponseBody
     public void reserve(Library library, HttpSession session) {
-        library.setId((String) session.getAttribute("id"));
         libraryService.reserve(library);
     }
 }

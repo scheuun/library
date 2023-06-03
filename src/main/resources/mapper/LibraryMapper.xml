@@ -5,4 +5,9 @@
         insert into librarys(rki_no, book_nm_info, author_nm_info, publshcmpy_nm, publcatn_yy, id)
         values (#{rki_no}, #{book_nm_info}, #{author_nm_info}, #{publshcmpy_nm}, #{publcatn_yy}, #{id})
     </insert>
+
+    <select id="checkRes" resultType="int">
+        select count(*) from librarys
+        where rki_no = #{rki_no}
+    </select>
 </mapper>

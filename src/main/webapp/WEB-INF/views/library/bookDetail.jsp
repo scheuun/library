@@ -57,6 +57,7 @@
     <script>
         $(document).ready(function () {
             $('#reserveBtn').click(function (){
+
                 var id = '<%= (String)session.getAttribute("id") %>';
                 var rki_no = $('#rki_no').val();
                 var book_nm_info = $('#book_nm_info').val();
@@ -65,32 +66,28 @@
                 var publcatn_yy = $('#publcatn_yy').val();
 
                 console.log(id);
-
-                if (id !== null && id.length !== 0) {
-                    $.ajax({
-                        type: "POST",
-                        url: "/reserve",
-                        dataType: "json",
-                        data: {
-                            rki_no: rki_no,
-                            book_nm_info: book_nm_info,
-                            author_nm_info: author_nm_info,
-                            publshcmpy_nm: publshcmpy_nm,
-                            publcatn_yy: publcatn_yy,
-                            id: id
-                        },
-                        success: function (data) {
-                            result: data;
-                            console.log("성공");
-                        },
-                        error: function (data) {
-                            result: data;
-                            alert("실패");
-                        }
-                    });
-                } else {
-                    location.href = "<%= request.getContextPath() %>/member/login";
-                }
+                if (id !== 'null' && id.length !== 0)
+                $.ajax({
+                    type: "POST",
+                    url: "/reserve",
+                    data: {
+                        rki_no: rki_no,
+                        book_nm_info: book_nm_info,
+                        author_nm_info: author_nm_info,
+                        publshcmpy_nm: publshcmpy_nm,
+                        publcatn_yy: publcatn_yy,
+                        id: id
+                    },
+                    success: function (data) {
+                        result: data;
+                        alert("예약 성공");
+                    },
+                    error: function (data) {
+                        result: data;
+                        alert("실패");
+                    }
+                });
+                else location.href="<%=request.getContextPath() %>/member/login";
             });
         });
     </script>
@@ -119,7 +116,7 @@
     <input type="hidden" id="publshcmpy_nm" value="${publshcmpy_nm}">
     <p>출판 날짜: ${publcatn_yy}</p>
     <input type="hidden" id="publcatn_yy" value="${publcatn_yy}">
-    <p>책상태: (대출 가능 여부)</p>
+    <p>책상태: ${state}</p>
     <button id="reserveBtn" class="btn btn-primary">예약</button>
 </div>
 </body>

@@ -14,4 +14,9 @@ public class LibraryServiceImpl implements LibraryService{
     public void reserve(Library library) {
         libraryMap.reserve(library);
     }
+
+    @Override
+    public int checkRes(int rki_no) {
+        return libraryMap.checkRes(rki_no);
+    }
 }
