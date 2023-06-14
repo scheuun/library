@@ -56,6 +56,7 @@
     </style>
     <script>
         $(document).ready(function () {
+            console.log(rki_no)
             $('#reserveBtn').click(function (){
 
                 var id = '<%= (String)session.getAttribute("id") %>';
@@ -64,8 +65,8 @@
                 var author_nm_info = $('#author_nm_info').val();
                 var publshcmpy_nm = $('#publshcmpy_nm').val();
                 var publcatn_yy = $('#publcatn_yy').val();
+                var state_cnt = $('#state_cnt').val();
 
-                console.log(id);
                 if (id !== 'null' && id.length !== 0)
                 $.ajax({
                     type: "POST",
@@ -76,6 +77,7 @@
                         author_nm_info: author_nm_info,
                         publshcmpy_nm: publshcmpy_nm,
                         publcatn_yy: publcatn_yy,
+                        state_cnt: state_cnt,
                         id: id
                     },
                     success: function (data) {
@@ -116,7 +118,7 @@
     <input type="hidden" id="publshcmpy_nm" value="${publshcmpy_nm}">
     <p>출판 날짜: ${publcatn_yy}</p>
     <input type="hidden" id="publcatn_yy" value="${publcatn_yy}">
-    <p>책상태: ${state}</p>
+    <p>책상태: ${state_cnt} (예약: 00명)</p>
     <button id="reserveBtn" class="btn btn-primary">예약</button>
 </div>
 </body>

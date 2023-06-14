@@ -27,7 +27,6 @@ public class LibraryController {
     public String BookDetail(HttpServletRequest httpServletRequest, HttpSession session, Model model) throws JSONException {
         JSONObject json = new JSONObject(httpServletRequest.getParameter("bookData"));
 
-
         session.getAttribute("id");
 
         model.addAttribute("rki_no", json.getInt("rki_no"));
@@ -36,13 +35,23 @@ public class LibraryController {
         model.addAttribute("publshcmpy_nm", json.getString("publshcmpy_nm"));
         model.addAttribute("publcatn_yy", json.getString("publcatn_yy"));
         model.addAttribute("book_image_url", json.getString("book_image_url"));
-        model.addAttribute("state", libraryService.checkRes(json.getInt("rki_no")) == 0 ? "O" : "X");
+        model.addAttribute("state_cnt", libraryService.checkRes(json.getInt("rki_no")) == 0 ? "O" : "X");
         return "library/bookDetail";
     }
 
     @PostMapping("/reserve")
     @ResponseBody
-    public void reserve(Library library, HttpSession session) {
+    public void reserve(Library library, HttpServletRequest httpServletRequest) {
+
+        int rki_no = Integer.parseInt(httpServletRequest.getParameter("rki_no"));
+        System.out.println(rki_no);
+
+        if (libraryService.checkRes(rki_no) == 0){
+            library.setState_cnt(0);
+        } else {
+            library.setState_cnt(library.getState_cnt() + 1);
+        }
+
         libraryService.reserve(library);
     }
 }

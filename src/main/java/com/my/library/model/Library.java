@@ -9,7 +9,7 @@ public class Library {
 	private String author_nm_info;
 	private String publshcmpy_nm;
 	private String publcatn_yy;
-	private int volm_cnt;
+	private int state_cnt;
 	private String book_image_url;
 	private String id;
 
@@ -61,12 +61,12 @@ public class Library {
         this.publcatn_yy = publcatn_yy;
     }
 
-    public int getVolm_cnt() {
-        return volm_cnt;
+    public int getState_cnt() {
+        return state_cnt;
     }
 
-    public void setVolm_cnt(int volm_cnt) {
-        this.volm_cnt = volm_cnt;
+    public void setState_cnt(int state_cnt) {
+        this.state_cnt = state_cnt;
     }
 
     public String getBook_image_url() {
