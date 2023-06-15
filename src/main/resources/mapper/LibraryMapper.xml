@@ -2,13 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.my.library.dao.map.LibraryMap">
     <insert id="reserve">
-        insert into librarys(rki_no, book_nm_info, author_nm_info, publshcmpy_nm, publcatn_yy, id, state_cnt)
-        values (#{rki_no}, #{book_nm_info}, #{author_nm_info}, #{publshcmpy_nm}, #{publcatn_yy}, #{id}, #{state_cnt})
+        insert into librarys(rki_no, book_nm_info, author_nm_info, publshcmpy_nm, publcatn_yy, res_date, id)
+        values (#{rki_no}, #{book_nm_info}, #{author_nm_info}, #{publshcmpy_nm}, #{publcatn_yy}, now(), #{id})
     </insert>
 
-    <select id="checkRes" resultType="int">
-        select count(state_cnt) from librarys
+    <select id="checkCnt" resultType="int">
+        select count(*) from librarys
         where rki_no = #{rki_no}
+    </select>
+
+    <select id="checkRes" resultType="date">
+        select min(res_date) from librarys
+        where rki_no = #{rki_no}
+    </select>
+
+    <select id="checkMax" resultType="int">
+        select count(*) from librarys
+        where id = #{id}
+    </select>
+
+    <select id="checkDup" resultType="int">
+        select count(*) from librarys
+        where id = #{id} and rki_no = #{rki_no}
     </select>
 
 </mapper>

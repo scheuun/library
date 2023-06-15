@@ -122,7 +122,7 @@
 </head>
 <body>
 <header>
-    <h1>도서관</h1>
+    <h1>소복도서관</h1>
 </header>
 <div style="text-align: right">
     <c:if test="${empty sessionScope.id}">
@@ -169,7 +169,6 @@
     </c:if>
     <c:if test="${not empty sessionScope.id}">
         <a style='color:black' href = '<%=request.getContextPath() %>/library/login'><h2>대출 현황</h2></a>
-        <a style='color:black' href = '<%=request.getContextPath() %>/library/login'><h2>대출 이력</h2></a>
         <a style='color:black' href = '<%=request.getContextPath() %>/member/myPage'><h2>마이페이지</h2></a>
     </c:if>
 </section>

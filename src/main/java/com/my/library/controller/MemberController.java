@@ -1,16 +1,16 @@
 package com.my.library.controller;
 
-import com.my.library.model.EncryptionUtils;
 import com.my.library.model.Member;
+import com.my.library.model.SHA256;
 import com.my.library.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.security.NoSuchAlgorithmException;
 
 @Controller
 public class MemberController {
@@ -40,8 +40,7 @@ public class MemberController {
 
   @PostMapping("/join")
   @ResponseBody
-    public int join(Member member) {
-    member.setPwd(EncryptionUtils.encryptSHA256(member.getPwd()));
+    public int join(Member member) throws NoSuchAlgorithmException {
     return memberService.joinMember(member);
   }
 
@@ -52,8 +51,10 @@ public class MemberController {
   }
 
   @PostMapping("/member/login")
-  public String loginMembers(String id, String pwd, HttpSession session, String rememberId, HttpServletResponse response, Model model) {
-    if (EncryptionUtils.encryptSHA256(pwd).equals(memberService.pwdCheck(id))) {
+  public String loginMembers(String id, String pwd, HttpSession session, String rememberId, HttpServletResponse response, Model model) throws NoSuchAlgorithmException  {
+    SHA256 sha256 = new SHA256();
+
+    if (sha256.encrypt(pwd).equals(memberService.pwdCheck(id))) {
       session.setAttribute("id", id);
 
       if (rememberId != null) {
@@ -97,8 +98,9 @@ public class MemberController {
 
   @PostMapping("/updatePwd")
   @ResponseBody
-  public void updatePwd(Member member) {
-    member.setPwd(EncryptionUtils.encryptSHA256(member.getPwd()));
+  public void updatePwd(Member member) throws NoSuchAlgorithmException {
+    SHA256 sha256 = new SHA256();
+    member.setPwd(sha256.encrypt(member.getPwd()));
     memberService.updatePwd(member);
   }
 }

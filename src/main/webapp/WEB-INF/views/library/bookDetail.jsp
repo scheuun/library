@@ -56,9 +56,13 @@
     </style>
     <script>
         $(document).ready(function () {
-            console.log(rki_no)
-            $('#reserveBtn').click(function (){
 
+            $('#reserveBtn').click(function (){
+            if (${max >= 7}) {
+                alert("최대 예약권수를 초과하였습니다.");
+            } else if (${dup > 0}) {
+                alert("이미 예약된 도서입니다.");
+            } else {
                 var id = '<%= (String)session.getAttribute("id") %>';
                 var rki_no = $('#rki_no').val();
                 var book_nm_info = $('#book_nm_info').val();
@@ -67,29 +71,34 @@
                 var publcatn_yy = $('#publcatn_yy').val();
                 var state_cnt = $('#state_cnt').val();
 
+
                 if (id !== 'null' && id.length !== 0)
-                $.ajax({
-                    type: "POST",
-                    url: "/reserve",
-                    data: {
-                        rki_no: rki_no,
-                        book_nm_info: book_nm_info,
-                        author_nm_info: author_nm_info,
-                        publshcmpy_nm: publshcmpy_nm,
-                        publcatn_yy: publcatn_yy,
-                        state_cnt: state_cnt,
-                        id: id
-                    },
-                    success: function (data) {
-                        result: data;
-                        alert("예약 성공");
-                    },
-                    error: function (data) {
-                        result: data;
-                        alert("실패");
-                    }
-                });
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/reserve",
+                        data: {
+                            rki_no: rki_no,
+                            book_nm_info: book_nm_info,
+                            author_nm_info: author_nm_info,
+                            publshcmpy_nm: publshcmpy_nm,
+                            publcatn_yy: publcatn_yy,
+                            state_cnt: state_cnt,
+                            id: id
+                        },
+                        success: function (data) {
+                            result: data;
+                            alert("예약 성공");
+                            location.reload();
+                        },
+                        error: function (data) {
+                            result: data;
+                            alert("실패");
+                        }
+                    });
                 else location.href="<%=request.getContextPath() %>/member/login";
+            }
             });
         });
     </script>
@@ -118,7 +127,8 @@
     <input type="hidden" id="publshcmpy_nm" value="${publshcmpy_nm}">
     <p>출판 날짜: ${publcatn_yy}</p>
     <input type="hidden" id="publcatn_yy" value="${publcatn_yy}">
-    <p>책상태: ${state_cnt} (예약: 00명)</p>
+    <p>책상태: ${state_cnt == 0? "O":"X"} (예약 대기: ${state_cnt == 0?0:state_cnt-1}명)</p>
+    <p>반납 예정일: ${res_date}</p>
     <button id="reserveBtn" class="btn btn-primary">예약</button>
 </div>
 </body>

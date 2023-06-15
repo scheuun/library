@@ -1,6 +1,9 @@
 package com.my.library.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Library {
     private LocalDate std_ym;
@@ -9,8 +12,10 @@ public class Library {
 	private String author_nm_info;
 	private String publshcmpy_nm;
 	private String publcatn_yy;
-	private int state_cnt;
 	private String book_image_url;
+    @DateTimeFormat(pattern="yyyy-mm-dd")
+    @JsonFormat(pattern="yyyy-mm-dd", timezone="Asia/Seoul")
+    private Date res_date;
 	private String id;
 
     public LocalDate getStd_ym() {
@@ -61,20 +66,20 @@ public class Library {
         this.publcatn_yy = publcatn_yy;
     }
 
-    public int getState_cnt() {
-        return state_cnt;
-    }
-
-    public void setState_cnt(int state_cnt) {
-        this.state_cnt = state_cnt;
-    }
-
     public String getBook_image_url() {
         return book_image_url;
     }
 
     public void setBook_image_url(String book_image_url) {
         this.book_image_url = book_image_url;
+    }
+
+    public Date getRes_date() {
+        return res_date;
+    }
+
+    public void setRes_date(Date res_date) {
+        this.res_date = res_date;
     }
 
     public String getId() {

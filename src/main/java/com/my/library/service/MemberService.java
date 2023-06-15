@@ -2,10 +2,10 @@ package com.my.library.service;
 
 import com.my.library.model.Member;
 
-import java.util.List;
+import java.security.NoSuchAlgorithmException;
 
 public interface MemberService {
-    int joinMember(Member member);
+    int joinMember(Member member) throws NoSuchAlgorithmException;
     int idCheck(String id);
     String pwdCheck(String id);
     String findId(String email);

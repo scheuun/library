@@ -1,12 +1,11 @@
 package com.my.library.service;
 
 import com.my.library.dao.map.MemberMap;
-import com.my.library.model.EncryptionUtils;
 import com.my.library.model.Member;
+import com.my.library.model.SHA256;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import java.security.NoSuchAlgorithmException;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -15,8 +14,9 @@ public class MemberServiceImpl implements MemberService{
 
 
     @Override
-    public int joinMember(Member member) {
-        member.setPwd(EncryptionUtils.encryptSHA256(member.getPwd()));
+    public int joinMember(Member member) throws NoSuchAlgorithmException {
+        SHA256 sha256 = new SHA256();
+        member.setPwd(sha256.encrypt(member.getPwd()));
         return memberMap.joinMember(member);
     }
 
