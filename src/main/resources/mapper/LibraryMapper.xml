@@ -11,7 +11,7 @@
         where rki_no = #{rki_no}
     </select>
 
-    <select id="checkRes" resultType="date">
+    <select id="checkRes" resultType="String">
         select min(res_date) from librarys
         where rki_no = #{rki_no}
     </select>

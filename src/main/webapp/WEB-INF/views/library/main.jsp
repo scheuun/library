@@ -89,7 +89,6 @@
                         imageNum.src = jsonData.Poplitloanbook[1].row[i].BOOK_IMAGE_URL;
 
                         imageNum.addEventListener("click", function() {;
-                           // window.location.href = "<%=request.getContextPath() %>/library/bookDetail" + JSON.stringify(jsonData.Poplitloanbook[1].row[i].RKI_NO);
                             var form = document.createElement("form");
                             form.method = "POST";
                             form.action = "<%=request.getContextPath() %>/library/bookDetail";
@@ -117,7 +116,7 @@
                     alert("실패");
                 }
             });
-        });;
+        });
     </script>
 </head>
 <body>
@@ -136,8 +135,8 @@
 </div>
 <section>
     <h2>도서 검색</h2>
-    <form>
-        <input type="text" placeholder="도서명을 입력하세요">
+    <form method="get" action="library/searchResult">
+        <input type="text" name="bookName" placeholder="도서명을 입력하세요">
         <button type="submit">검색</button>
     </form>
 </section>

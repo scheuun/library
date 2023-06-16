@@ -4,7 +4,6 @@ import com.my.library.dao.map.LibraryMap;
 import com.my.library.model.Library;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Date;
 
 @Service
 public class LibraryServiceImpl implements LibraryService{
@@ -22,7 +21,7 @@ public class LibraryServiceImpl implements LibraryService{
     }
 
     @Override
-    public Date checkRes(int rki_no) {
+    public String checkRes(int rki_no) {
         return libraryMap.checkRes(rki_no);
     }
 

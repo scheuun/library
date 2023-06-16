@@ -1,7 +1,5 @@
 package com.my.library.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -13,8 +11,6 @@ public class Library {
 	private String publshcmpy_nm;
 	private String publcatn_yy;
 	private String book_image_url;
-    @DateTimeFormat(pattern="yyyy-mm-dd")
-    @JsonFormat(pattern="yyyy-mm-dd", timezone="Asia/Seoul")
     private Date res_date;
 	private String id;
 
