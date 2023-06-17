@@ -71,10 +71,7 @@
                 var publcatn_yy = $('#publcatn_yy').val();
                 var state_cnt = $('#state_cnt').val();
 
-
                 if (id !== 'null' && id.length !== 0)
-
-
                     $.ajax({
                         type: "POST",
                         url: "/reserve",
@@ -98,7 +95,7 @@
                         }
                     });
                 else location.href="<%=request.getContextPath() %>/member/login";
-            }
+                }
             });
         });
     </script>

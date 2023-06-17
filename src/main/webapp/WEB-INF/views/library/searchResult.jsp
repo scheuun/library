@@ -58,6 +58,21 @@
                 success: function (data) {
                     const jsonData = JSON.parse(data);
                     console.log(jsonData.Poplitloanbook[1].row[1]);
+
+                    $.ajax({
+                        url: '/library/searchResult',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(jsonData),
+                        success: function (data) {
+                            result:data;
+                            console.log('전달 성공');
+                        },
+                        error: function (error) {
+                            console.log(error);
+                            alert("실패");
+                        }
+                    });
                 },
                 error: function (data) {
                     console.log(data);
@@ -65,7 +80,6 @@
                 }
             });
         });
-
     </script>
 </head>
 <body>
