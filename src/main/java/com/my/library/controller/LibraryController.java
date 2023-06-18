@@ -25,17 +25,8 @@ public class LibraryController {
         return "library/main";
     }
 
-//    @GetMapping("library/searchResult")
-//    public String SearchResult (HttpSession session, HttpServletRequest httpServletRequest) {
-//        session.getAttribute("id");
-//        System.out.println(httpServletRequest.getParameter("bookName"));
-//        return "library/searchResult";
-//    }
-
-    @RequestMapping(value="library/searchResult", method = {RequestMethod.GET, RequestMethod.POST})
-    public String SearchResult (@RequestParam("jsonData") String jsonData, HttpServletRequest httpServletRequest) {
-        httpServletRequest.getParameter("bookName");
-        System.out.println(jsonData);
+    @GetMapping("library/searchResult")
+    public String SearchResult (HttpServletRequest httpServletRequest) {
         return "library/searchResult";
     }
 
@@ -72,5 +63,13 @@ public class LibraryController {
     @ResponseBody
     public void reserve(Library library) {
         libraryService.reserve(library);
+    }
+
+    @PostMapping("/searchResult")
+    @ResponseBody
+    public void Search (@RequestBody String jsonData,  HttpServletRequest httpServletRequest) {
+        httpServletRequest.getParameter("bookName");
+        System.out.println(httpServletRequest.getParameter("bookName"));
+        System.out.println(jsonData);
     }
 }

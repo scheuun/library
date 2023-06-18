@@ -57,10 +57,8 @@
                 type: 'GET',
                 success: function (data) {
                     const jsonData = JSON.parse(data);
-                    console.log(jsonData.Poplitloanbook[1].row[1]);
-
                     $.ajax({
-                        url: '/library/searchResult',
+                        url: '/searchResult',
                         type: 'POST',
                         contentType: 'application/json',
                         data: JSON.stringify(jsonData),
@@ -99,7 +97,7 @@
 <div class="search-results">
     <!-- 검색 결과 도서 아이템 -->
     <div class="book-item">
-        <img src="book_image_url" alt="도서 이미지">
+        <img src="" alt="도서 이미지">
         <h3>도서 제목</h3>
         <p>저자</p>
         <p class="publisher">출판사</p>
