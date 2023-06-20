@@ -65,6 +65,15 @@
                         success: function (data) {
                             result:data;
                             console.log('전달 성공');
+
+                            if ((jsonData.Poplitloanbook[1].row[1].BOOK_NM_INFO).match("아버지")) {
+                                console.log("검색 성공")
+                            } else {
+                                console.log("검색 실패")
+                            }
+                            console.log(jsonData.Poplitloanbook[1].row[1].BOOK_NM_INFO)
+                            console.log(jsonData.Poplitloanbook[1].row[1].AUTHOR_NM_INFO)
+                            console.log(jsonData.Poplitloanbook[1].row[1].PUBLSHCMPY_NM)
                         },
                         error: function (error) {
                             console.log(error);
