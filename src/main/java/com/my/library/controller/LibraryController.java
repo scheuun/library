@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Iterator;
 
 @Controller
 public class LibraryController {
@@ -26,7 +25,7 @@ public class LibraryController {
         return "library/main";
     }
 
-    @GetMapping("library/searchResult")
+    @RequestMapping(value="/library/searchResult" , method = {RequestMethod.GET, RequestMethod.POST})
     public String SearchResult () {
         return "library/searchResult";
     }
@@ -64,21 +63,5 @@ public class LibraryController {
     @ResponseBody
     public void reserve(Library library) {
         libraryService.reserve(library);
-    }
-
-    @PostMapping("/library/searchResult")
-    @ResponseBody
-    public void Search (@RequestBody String jsonData,  HttpServletRequest httpServletRequest) throws JSONException {
-
-        String bookName = httpServletRequest.getParameter("bookName");
-        JSONObject bookData = new JSONObject(jsonData);
-        System.out.println(bookName);
-        System.out.println(bookData);
-//        if (jsonData.matches(bookName)) {
-//            Object bookValue = bookData.get(bookName);
-//            System.out.println("bookName에 해당하는 값: " + bookValue);
-//        } else {
-//            System.out.println("bookName에 해당하는 값이 존재하지 않습니다.");
-//        }
     }
 }

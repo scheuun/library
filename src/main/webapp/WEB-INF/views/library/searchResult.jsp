@@ -52,34 +52,47 @@
     </style>
     <script>
         $(document).ready(function () {
+            var keyword = '<%= request.getParameter("keyword") %>';
+            console.log(keyword);
             $.ajax({
                 url: 'https://openapi.gg.go.kr/Poplitloanbook?KEY=eb69202112ec4d8399e7b233465154e8&Type=json&pIndex=1&pSize=1000',
                 type: 'GET',
                 success: function (data) {
                     const jsonData = JSON.parse(data);
-                    $.ajax({
-                        url: '/library/searchResult',
-                        type: 'POST',
-                        contentType: 'application/json',
-                        data: JSON.stringify(jsonData),
-                        success: function (data) {
-                            result:data;
-                            console.log('전달 성공');
+                    console.log('성공');
 
-                            // if ((jsonData.Poplitloanbook[1].row[1].BOOK_NM_INFO).match("아버지")) {
-                            //     console.log("검색 성공")
-                            // } else {
-                            //     console.log("검색 실패")
-                            // }
-                            // console.log(jsonData.Poplitloanbook[1].row[1].BOOK_NM_INFO)
-                            // console.log(jsonData.Poplitloanbook[1].row[1].AUTHOR_NM_INFO)
-                            // console.log(jsonData.Poplitloanbook[1].row[1].PUBLSHCMPY_NM)
-                        },
-                        error: function (error) {
-                            console.log(error);
-                            alert("실패");
+                    let searchResults = [];
+
+                    for (const item of jsonData.Poplitloanbook[1].row) {
+                        // 속성 값이 keyword와 일치하는지 값이 있는 지 검사
+                        if ((item.BOOK_NM_INFO && item.BOOK_NM_INFO.includes(keyword)) ||
+                            (item.AUTHOR_NM_INFO && item.AUTHOR_NM_INFO.includes(keyword)) ||
+                            (item.PUBLSHCMPY_NM && item.PUBLSHCMPY_NM.includes(keyword))) {
+                            searchResults.push(item);
                         }
-                    });
+                    }
+                    $("#bookCount").append(searchResults.length);
+                    if (searchResults.length > 0) {
+                        console.log("검색 성공");
+                        $("#searchResults").empty();
+
+                        for (const result of searchResults) {
+                            const bookItem = $('<div class="book-item">');
+                            const bookImage = $('<img src="' + result.BOOK_IMAGE_URL + '" alt="도서 이미지">');
+                            const bookTitle = $('<h3>').text(result.BOOK_NM_INFO);
+                            const bookAuthor = $('<p>').text(result.AUTHOR_NM_INFO);
+                            const bookPublisher = $('<p class="publisher">').text(result.PUBLSHCMPY_NM);
+
+                            bookItem.append(bookImage);
+                            bookItem.append(bookTitle);
+                            bookItem.append(bookAuthor);
+                            bookItem.append(bookPublisher);
+
+                            $("#searchResults").append(bookItem);
+                        }
+                    } else {
+                        $("#searchResults").append("검색 결과가 존재하지 않습니다.");
+                    }
                 },
                 error: function (data) {
                     console.log(data);
@@ -103,26 +116,8 @@
     <a style='color:black' href = '<%=request.getContextPath() %>/member/join'>회원가입</a> |
     <a style='color:black' href = '<%=request.getContextPath() %>/'>메인</a>
 </div>
-<div class="search-results">
-    <!-- 검색 결과 도서 아이템 -->
-    <div class="book-item">
-        <img src="" alt="도서 이미지">
-        <h3>도서 제목</h3>
-        <p>저자</p>
-        <p class="publisher">출판사</p>
-    </div>
-
-    <!-- 추가 검색 결과 도서 아이템 -->
-    <div class="book-item">
-        <!-- ... -->
-    </div>
-
-    <!-- 추가 검색 결과 도서 아이템 -->
-    <div class="book-item">
-        <!-- ... -->
-    </div>
-
-    <!-- ... -->
+<b style="float: right">총 <b id="bookCount"></b>권이 검색되었습니다.</b>
+<div id="searchResults">
 </div>
 </body>
 </html>

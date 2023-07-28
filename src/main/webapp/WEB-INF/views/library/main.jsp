@@ -136,7 +136,7 @@
 <section>
     <h2>도서 검색</h2>
     <form method="post" action="library/searchResult">
-        <input type="text" name="bookName" placeholder="도서명을 입력하세요">
+        <input type="text" name="keyword" placeholder="도서명을 입력하세요">
         <button type="submit">검색</button>
     </form>
 </section>
