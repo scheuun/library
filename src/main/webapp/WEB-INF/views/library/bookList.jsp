@@ -7,11 +7,6 @@
 <head>
     <title>SEARCH RESULT</title>
     <style>
-        .search-results {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
         header {
             background-color: #f5f5f5;
             padding: 20px;
@@ -56,8 +51,6 @@
     </style>
     <script>
         $(document).ready(function () {
-            var keyword = '<%= request.getParameter("keyword") %>';
-            console.log(keyword);
             $.ajax({
                 url: 'https://openapi.gg.go.kr/Poplitloanbook?KEY=eb69202112ec4d8399e7b233465154e8&Type=json&pIndex=1&pSize=1000',
                 type: 'GET',
@@ -129,7 +122,7 @@
 </head>
 <body>
 <header>
-    <h1>도서 검색 결과</h1>
+    <h1>도서 대출 현황</h1>
 </header>
 <div style="text-align: right">
     <c:if test="${empty sessionScope.id}">
@@ -141,7 +134,6 @@
     <a style='color:black' href = '<%=request.getContextPath() %>/member/join'>회원가입</a> |
     <a style='color:black' href = '<%=request.getContextPath() %>/'>메인</a>
 </div>
-<b style="float: right">총 <b id="bookCount"></b>권이 검색되었습니다.</b><br>
 <div id="searchResults" class="searchResults">
 </div>
 </body>

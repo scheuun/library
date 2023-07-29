@@ -5,15 +5,23 @@ import com.my.library.model.Library;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LibraryServiceImpl implements LibraryService{
     @Autowired
     LibraryMap libraryMap;
 
     @Override
+    public List<Library> list(String id) { return libraryMap.list(id); }
+
+    @Override
     public void reserve(Library library) {
         libraryMap.reserve(library);
     }
+
+    @Override
+    public void cancel(String id, int rki_no) { libraryMap.cancel(id, rki_no); }
 
     @Override
     public int checkCnt(int rki_no) {

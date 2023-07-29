@@ -94,7 +94,38 @@
                             alert("실패");
                         }
                     });
+
                 else location.href="<%=request.getContextPath() %>/member/login";
+                }
+            });
+
+
+            $('#cancelBtn').click(function (){
+                if (${dup == 0}) {
+                    alert("이미 취소된 도서입니다.");
+                } else {
+                    var id = '<%= (String)session.getAttribute("id") %>';
+                    var rki_no = $('#rki_no').val();
+
+                    if (id !== 'null' && id.length !== 0)
+                        $.ajax({
+                            type: "POST",
+                            url: "/cancel",
+                            data: {
+                                rki_no: rki_no,
+                                id: id
+                            },
+                            success: function () {
+
+                                alert("취소 성공");
+                                location.reload();
+                            },
+                            error: function () {
+
+                                alert("실패");
+                            }
+                        });
+                    else location.href="<%=request.getContextPath() %>/member/login";
                 }
             });
         });
@@ -127,6 +158,7 @@
     <p>책상태: ${state_cnt == 0? "O":"X"} (예약 대기: ${state_cnt == 0?0:state_cnt-1}명)</p>
     <p>반납 예정일: ${res_date}</p>
     <button id="reserveBtn" class="btn btn-primary">예약</button>
+    <button id="cancelBtn" class="btn btn-primary">취소</button>
 </div>
 </body>
 </html>

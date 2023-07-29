@@ -163,7 +163,6 @@
 <section>
     <c:if test="${empty sessionScope.id}">
         <a style='color:black' href = '<%=request.getContextPath() %>/member/login'><h2>대출 현황</h2></a>
-        <a style='color:black' href = '<%=request.getContextPath() %>/member/login'><h2>대출 이력</h2></a>
         <a style='color:black' href = '<%=request.getContextPath() %>/member/login'><h2>마이페이지</h2></a>
     </c:if>
     <c:if test="${not empty sessionScope.id}">

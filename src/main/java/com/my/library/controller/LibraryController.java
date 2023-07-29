@@ -25,6 +25,12 @@ public class LibraryController {
         return "library/main";
     }
 
+    @GetMapping("/library/bookList")
+    public String List (Model model, HttpSession session) {
+        model.addAttribute("bookList", libraryService.list((String) session.getAttribute("id")));
+        return "library/bookList";
+    }
+
     @RequestMapping(value="/library/searchResult" , method = {RequestMethod.GET, RequestMethod.POST})
     public String SearchResult () {
         return "library/searchResult";
@@ -63,5 +69,11 @@ public class LibraryController {
     @ResponseBody
     public void reserve(Library library) {
         libraryService.reserve(library);
+    }
+
+    @PostMapping("/cancel")
+    @ResponseBody
+    public void cancel(String id, int rki_no) {
+        libraryService.cancel(id, rki_no);
     }
 }
