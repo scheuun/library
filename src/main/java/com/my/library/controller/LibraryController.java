@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 public class LibraryController {
@@ -27,7 +28,8 @@ public class LibraryController {
 
     @GetMapping("/library/bookList")
     public String List (Model model, HttpSession session) {
-        model.addAttribute("bookList", libraryService.list((String) session.getAttribute("id")));
+        List<Library> list = libraryService.list((String) session.getAttribute("id"));
+        model.addAttribute("list", list);
         return "library/bookList";
     }
 
@@ -47,7 +49,7 @@ public class LibraryController {
 
         if (date != null) {
             LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
-            LocalDate resultDate = localDate.plusDays(7);
+            LocalDate resultDate = localDate.plusDays(14);
             res_date = resultDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
         }
 
@@ -61,7 +63,6 @@ public class LibraryController {
                 .addAttribute("state_cnt", libraryService.checkCnt(json.getInt("rki_no")))
                 .addAttribute("max", libraryService.checkMax(id))
                 .addAttribute("dup", libraryService.checkDup(id, json.getInt("rki_no")));
-
         return "library/bookDetail";
     }
 
@@ -73,7 +74,9 @@ public class LibraryController {
 
     @PostMapping("/cancel")
     @ResponseBody
-    public void cancel(String id, int rki_no) {
-        libraryService.cancel(id, rki_no);
-    }
+    public void cancel(String id, int rki_no) { libraryService.cancel(id, rki_no); }
+
+    @PostMapping("/extend")
+    @ResponseBody
+    public void extend(String id, int rki_no) { libraryService.extend(id, rki_no); }
 }

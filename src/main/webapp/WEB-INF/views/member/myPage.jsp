@@ -1,13 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<%--
-  Created by IntelliJ IDEA.
-  User: sche1
-  Date: 2022-11-10
-  Time: 오후 3:31
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -17,6 +10,12 @@
 <script>
 </script>
 <style>
+    header {
+        background-color: #f5f5f5;
+        padding: 20px;
+        text-align: center;
+    }
+
     nav {
         height: 75px;
         padding: 1rem;
@@ -30,7 +29,12 @@
 </style>
 </head>
 <body>
-<br><br><br>
+<header>
+    <h1>소복도서관</h1>
+</header>
+<div style="text-align: right">
+    <a style='color:black' href = '<%=request.getContextPath() %>/'>메인</a>
+</div>
 <h4 style='text-align:center;'><b>마이페이지</b></h4><hr><br>
 <c:if test="${not empty sessionScope.id}">
     <div style="text-align: right">

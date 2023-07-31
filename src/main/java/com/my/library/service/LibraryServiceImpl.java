@@ -24,6 +24,9 @@ public class LibraryServiceImpl implements LibraryService{
     public void cancel(String id, int rki_no) { libraryMap.cancel(id, rki_no); }
 
     @Override
+    public void extend(String id, int rki_no) { libraryMap.extend(id, rki_no); }
+
+    @Override
     public int checkCnt(int rki_no) {
         return libraryMap.checkCnt(rki_no);
     }

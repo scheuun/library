@@ -7,10 +7,10 @@
 <head>
     <title>BOOK DETAIL</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
+        header {
+            background-color: #f5f5f5;
             padding: 20px;
+            text-align: center;
         }
 
         #book-details {
@@ -22,7 +22,7 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        h1 {
+        .title {
             font-size: 24px;
             margin-top: 0;
         }
@@ -69,9 +69,12 @@
                 var author_nm_info = $('#author_nm_info').val();
                 var publshcmpy_nm = $('#publshcmpy_nm').val();
                 var publcatn_yy = $('#publcatn_yy').val();
+                var book_image_url = $('#book_image_url').val();
                 var state_cnt = $('#state_cnt').val();
 
-                if (id !== 'null' && id.length !== 0)
+                if (id === null || id === "null" || id.length === 0)
+                    location.href="<%=request.getContextPath() %>/member/login";
+                else
                     $.ajax({
                         type: "POST",
                         url: "/reserve",
@@ -81,6 +84,7 @@
                             author_nm_info: author_nm_info,
                             publshcmpy_nm: publshcmpy_nm,
                             publcatn_yy: publcatn_yy,
+                            book_image_url: book_image_url,
                             state_cnt: state_cnt,
                             id: id
                         },
@@ -94,44 +98,41 @@
                             alert("실패");
                         }
                     });
-
-                else location.href="<%=request.getContextPath() %>/member/login";
                 }
             });
 
 
             $('#cancelBtn').click(function (){
-                if (${dup == 0}) {
-                    alert("이미 취소된 도서입니다.");
-                } else {
-                    var id = '<%= (String)session.getAttribute("id") %>';
-                    var rki_no = $('#rki_no').val();
+                var id = '<%= (String)session.getAttribute("id") %>';
+                var rki_no = $('#rki_no').val();
 
-                    if (id !== 'null' && id.length !== 0)
-                        $.ajax({
-                            type: "POST",
-                            url: "/cancel",
-                            data: {
-                                rki_no: rki_no,
-                                id: id
-                            },
-                            success: function () {
-
-                                alert("취소 성공");
-                                location.reload();
-                            },
-                            error: function () {
-
-                                alert("실패");
-                            }
-                        });
-                    else location.href="<%=request.getContextPath() %>/member/login";
-                }
+                if (id === null || id === "null" || id.length === 0)
+                    location.href="<%=request.getContextPath() %>/member/login";
+                else if (${dup == 0}) alert("이미 취소된 도서입니다.");
+                else
+                    $.ajax({
+                    type: "POST",
+                    url: "/cancel",
+                    data: {
+                        rki_no: rki_no,
+                        id: id
+                    },
+                    success: function () {
+                        alert("취소 성공");
+                        location.reload();
+                    },
+                    error: function () {
+                        alert("실패");
+                    }
+                });
             });
         });
     </script>
 </head>
 <body>
+<header>
+    <h1>소복도서관</h1>
+</header>
 <div style="text-align: right">
     <c:if test="${empty sessionScope.id}">
         <a style='color:black' href = '<%=request.getContextPath() %>/member/login'>로그인</a> |
@@ -143,11 +144,12 @@
     <a style='color:black' href = '<%=request.getContextPath() %>/'>메인</a>
 </div>
 <div id="book-details">
-    <h1>${rki_no}. ${book_nm_info}</h1>
+    <h1 class="title">${rki_no}. ${book_nm_info}</h1>
     <input type="hidden" id="rki_no" value="${rki_no}">
     <input type="hidden" id="book_nm_info" value="${book_nm_info}">
     <div class="book">
         <img src=${book_image_url} >
+        <input type="hidden" id="book_image_url" value="${book_image_url}">
     </div>
     <p>저자: ${author_nm_info}</p>
     <input type="hidden" id="author_nm_info" value="${author_nm_info}">

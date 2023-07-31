@@ -6,6 +6,13 @@
 <head>
     <meta charset="utf-8">
     <title>FINDID</title>
+    <style>
+        header {
+            background-color: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
     <script>
         $(document).ready(function (){
             $('#findBtn').click(function (){
@@ -34,7 +41,12 @@
     </script>
 </head>
 <body>
-<br><br>
+<header>
+    <h1>소복도서관</h1>
+</header>
+<div style="text-align: right">
+    <a style='color:black' href = '<%=request.getContextPath() %>/'>메인</a>
+</div>
 <h4 style='text-align:center;'><b>아이디 찾기</b></h4><hr><br>
 <div class='row'>
     <div class='col' id='view1' style='text-align:center;'>

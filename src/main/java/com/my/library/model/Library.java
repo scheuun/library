@@ -11,7 +11,8 @@ public class Library {
 	private String publshcmpy_nm;
 	private String publcatn_yy;
 	private String book_image_url;
-    private Date res_date;
+    private String res_date;
+    private String exp_date;
 	private String id;
 
     public LocalDate getStd_ym() {
@@ -70,13 +71,17 @@ public class Library {
         this.book_image_url = book_image_url;
     }
 
-    public Date getRes_date() {
+    public String getRes_date() {
         return res_date;
     }
 
-    public void setRes_date(Date res_date) {
+    public void setRes_date(String res_date) {
         this.res_date = res_date;
     }
+
+    public String getExp_date() { return exp_date; }
+
+    public void setExp_date(String exp_date) { this.exp_date = exp_date; }
 
     public String getId() {
         return id;
