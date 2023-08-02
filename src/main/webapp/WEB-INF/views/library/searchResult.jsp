@@ -7,11 +7,6 @@
 <head>
     <title>SEARCH RESULT</title>
     <style>
-        .search-results {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
         header {
             background-color: #f5f5f5;
             padding: 20px;
@@ -63,21 +58,20 @@
                 type: 'GET',
                 success: function (data) {
                     const jsonData = JSON.parse(data);
-                    console.log('성공');
 
                     let searchResults = [];
 
                     for (const item of jsonData.Poplitloanbook[1].row) {
-                        // 속성 값이 keyword와 일치하는지 값이 있는 지 검사
                         if ((item.BOOK_NM_INFO && item.BOOK_NM_INFO.includes(keyword)) ||
                             (item.AUTHOR_NM_INFO && item.AUTHOR_NM_INFO.includes(keyword)) ||
                             (item.PUBLSHCMPY_NM && item.PUBLSHCMPY_NM.includes(keyword))) {
                             searchResults.push(item);
                         }
                     }
+
                     $("#bookCount").append(searchResults.length);
+
                     if (searchResults.length > 0) {
-                        console.log("검색 성공");
                         $("#searchResults").empty();
 
                         for (const result of searchResults) {
@@ -110,17 +104,17 @@
                                     publcatn_yy: result.PUBLCATN_YY,
                                     book_image_url: result.BOOK_IMAGE_URL
                                 });
+
                                 form.append(input);
                                 $('body').append(form);
                                 form.submit();
                             });
                         }
                     } else {
-                        $("#searchResults").append("검색 결과가 존재하지 않습니다.");
+                        $("#searchResults").append($('<br><h5 style="text-align: center">').text("검색 결과가 존재하지 않습니다."));
                     }
                 },
                 error: function (data) {
-                    console.log(data);
                     alert("실패");
                 }
             });

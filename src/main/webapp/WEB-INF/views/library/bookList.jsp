@@ -40,74 +40,57 @@
         }
     </style>
     <script>
-        <%--$(document).ready(function () {--%>
-        <%--    $.ajax({--%>
-        <%--        url: 'https://openapi.gg.go.kr/Poplitloanbook?KEY=eb69202112ec4d8399e7b233465154e8&Type=json&pIndex=1&pSize=1000',--%>
-        <%--        type: 'GET',--%>
-        <%--        success: function (data) {--%>
-        <%--            const jsonData = JSON.parse(data);--%>
-        <%--            console.log('성공');--%>
+        <%@ page import="com.fasterxml.jackson.databind.ObjectMapper" %><%@ page import="com.my.library.model.Library"%><%@ page import="java.util.List"%>
 
-        <%--            let searchResults = [];--%>
+        <%
+            List<Library> list = (List<Library>) request.getAttribute("list");
 
-        <%--            for (const item of jsonData.Poplitloanbook[1].row) {--%>
-        <%--                // 속성 값이 keyword와 일치하는지 값이 있는 지 검사--%>
-        <%--                if ((item.BOOK_NM_INFO && item.BOOK_NM_INFO.includes(keyword)) ||--%>
-        <%--                    (item.AUTHOR_NM_INFO && item.AUTHOR_NM_INFO.includes(keyword)) ||--%>
-        <%--                    (item.PUBLSHCMPY_NM && item.PUBLSHCMPY_NM.includes(keyword))) {--%>
-        <%--                    searchResults.push(item);--%>
-        <%--                }--%>
-        <%--            }--%>
-        <%--            $("#bookCount").append(searchResults.length);--%>
-        <%--            if (searchResults.length > 0) {--%>
-        <%--                console.log("검색 성공");--%>
-        <%--                $("#searchResults").empty();--%>
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonList = objectMapper.writeValueAsString(list);
+        %>
 
-        <%--                for (const result of searchResults) {--%>
-        <%--                    const bookItem = $('<div class="book-item">');--%>
-        <%--                    const bookImage = $('<img src="' + result.BOOK_IMAGE_URL + '" alt="도서 이미지">');// 이미지 누르면 이동--%>
-        <%--                    const bookTitle = $('<h3 class="title">').text(result.BOOK_NM_INFO);--%>
-        <%--                    const bookAuthor = $('<p class="author">').text(result.AUTHOR_NM_INFO);--%>
-        <%--                    const bookPublisher = $('<p class="publisher">').text(result.PUBLSHCMPY_NM);--%>
+        var bookList = <%= jsonList %>;
 
-        <%--                    bookItem.append(bookImage);--%>
-        <%--                    bookItem.append(bookTitle);--%>
-        <%--                    bookItem.append(bookAuthor);--%>
-        <%--                    bookItem.append(bookPublisher);--%>
+        $(document).ready(function () {
+            if (bookList.length == 0) {
+                $('.book-list').append($('<br><h5 style="text-align: center">').text("대출 도서가 없습니다."));
+            } else {
+                $('.book-item').each(function () {
+                    const res_date = new Date($(this).find('.res_date').text());
+                    const exp_date = new Date($(this).find('.exp_date').text());
 
-        <%--                    $("#searchResults").append(bookItem);--%>
+                    res_date.setDate(res_date.getDate() + 21);
 
-        <%--                    bookImage.on('click', function() {--%>
-        <%--                        var form = document.createElement("form");--%>
-        <%--                        form.method = "POST";--%>
-        <%--                        form.action = "<%=request.getContextPath() %>/library/bookDetail";--%>
+                    const extendButton = $('<button class="extBtn btn btn-primary">').text("반납 연기");
 
-        <%--                        var input = document.createElement("input");--%>
-        <%--                        input.type = "hidden";--%>
-        <%--                        input.name = "bookData";--%>
-        <%--                        input.value = JSON.stringify({--%>
-        <%--                            rki_no: result.RKI_NO,--%>
-        <%--                            book_nm_info: result.BOOK_NM_INFO,--%>
-        <%--                            author_nm_info: result.AUTHOR_NM_INFO,--%>
-        <%--                            publshcmpy_nm: result.PUBLSHCMPY_NM,--%>
-        <%--                            publcatn_yy: result.PUBLCATN_YY,--%>
-        <%--                            book_image_url: result.BOOK_IMAGE_URL--%>
-        <%--                        });--%>
-        <%--                        form.append(input);--%>
-        <%--                        $('body').append(form);--%>
-        <%--                        form.submit();--%>
-        <%--                    });--%>
-        <%--                }--%>
-        <%--            } else {--%>
-        <%--                $("#searchResults").append("검색 결과가 존재하지 않습니다.");--%>
-        <%--            }--%>
-        <%--        },--%>
-        <%--        error: function (data) {--%>
-        <%--            console.log(data);--%>
-        <%--            alert("실패");--%>
-        <%--        }--%>
-        <%--    });--%>
-        <%--});--%>
+                    if (res_date < exp_date) {
+                        $(this).find('.extend').append("반납 연기 불가");
+                    } else {
+                        $(this).find('.extend').append(extendButton);
+                    }
+                });
+
+                $('.extBtn').click(function () {
+                    var id = '<%= (String)session.getAttribute("id") %>';
+                    var rki_no = $(this).closest('.book-item').find('.rki_no').val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/extend",
+                        data: {
+                            id: id,
+                            rki_no: rki_no
+                        },
+                        success: function () {
+                            location.reload();
+                        },
+                        error: function () {
+                            alert("실패");
+                        },
+                    });
+                });
+            }
+        });
     </script>
 </head>
 <body>
@@ -124,12 +107,14 @@
     <a style='color:black' href = '<%=request.getContextPath() %>/member/join'>회원가입</a> |
     <a style='color:black' href = '<%=request.getContextPath() %>/'>메인</a>
 </div>
-<c:forEach var = "list" items="${list}">
-    <div class="book-item">
+<div class="book-list">
+<c:forEach var="list" items="${list}">
+    <div class="book-item" id="book-item">
+        <input type="hidden" class="rki_no" id="rki_no" value="${list.rki_no}">
         <img src="${list.book_image_url}" alt="도서 이미지"/>
         <h3 class="title">${list.book_nm_info}</h3>
         <p class="author">${list.author_nm_info}</p>
-        <p class="publisher">${list.publshcmpy_nm}</p><br>
+        <p class="publisher">${list.publshcmpy_nm}</p>
         <table>
             <tr>
                 <th>대출일</th>
@@ -137,12 +122,15 @@
                 <th>반납 연기</th>
             </tr>
             <tr>
-                <td>${list.res_date}</td>
-                <td>${list.exp_date}</td>
-                <td><button id="delayBtn" class="btn btn-primary">반납 연기</button></td>
+                <td class="res_date" >${list.res_date}</td>
+                <input type="hidden" class="res_date" id="res_date" value="${list.res_date}">
+                <td class="exp_date">${list.exp_date}</td>
+                <input type="hidden" class="exp_date" id="exp_date" value="${list.exp_date}">
+                <td class="extend"></td>
             </tr>
         </table>
     </div>
 </c:forEach>
+</div>
 </body>
 </html>

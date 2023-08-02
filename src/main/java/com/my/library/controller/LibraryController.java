@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -44,16 +42,7 @@ public class LibraryController {
 
         String id = (String) session.getAttribute("id");
 
-        String date = libraryService.checkRes(json.getInt("rki_no"));
-        String res_date = "";
-
-        if (date != null) {
-            LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
-            LocalDate resultDate = localDate.plusDays(14);
-            res_date = resultDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
-        }
-
-        model.addAttribute("res_date", res_date)
+        model.addAttribute("res_date", libraryService.checkRes(json.getInt("rki_no")))
                 .addAttribute("rki_no", json.getInt("rki_no"))
                 .addAttribute("book_nm_info", json.getString("book_nm_info"))
                 .addAttribute("author_nm_info", json.getString("author_nm_info"))
