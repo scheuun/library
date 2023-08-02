@@ -14,39 +14,30 @@
         }
 
         .book-item {
-            padding: 10px;
-            margin: 10px;
-            border: 1px solid #ccc;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
             border-radius: 5px;
-            display: flex;
-            align-items: center;
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .book-item img {
-            width: 150px;
-            height: 200px;
+            width: 10%;
+            height: auto;
             object-fit: cover;
             margin-right: 10px;
         }
 
         .title {
-            font-size: 16px;
-            margin-bottom: 150px;
-            text-align: center;
+            font-size: 1.2em;
+            margin: 10px 0;
         }
 
-        .author {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 50px;
-            text-align: center;
-        }
-
-        .publisher {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 0px;
-            text-align: center;
+        .author, .publisher {
+            color: #777;
+            margin: 5px 0;
         }
     </style>
     <script>
@@ -77,7 +68,7 @@
                         for (const result of searchResults) {
                             const bookItem = $('<div class="book-item">');
                             const bookImage = $('<img src="' + result.BOOK_IMAGE_URL + '" alt="도서 이미지">');// 이미지 누르면 이동
-                            const bookTitle = $('<h3 class="title">').text(result.BOOK_NM_INFO);
+                            const bookTitle = $('<h4 class="title">').text(result.RKI_NO + ". " + result.BOOK_NM_INFO);
                             const bookAuthor = $('<p class="author">').text(result.AUTHOR_NM_INFO);
                             const bookPublisher = $('<p class="publisher">').text(result.PUBLSHCMPY_NM);
 
